@@ -1,6 +1,5 @@
 package com.example.seniorservicesapp.ui
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,6 +21,7 @@ fun AdminDashboardScreen(navController: NavController) {
     LocalContext.current
     var requests by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
+    var showLogoutDialog by remember { mutableStateOf(false) }
 
     // Fetch requests when the screen is opened
     LaunchedEffect(Unit) {
@@ -74,12 +74,7 @@ fun AdminDashboardScreen(navController: NavController) {
 
         // Logout Button
         OutlinedButton(
-            onClick = {
-                AuthService.logout()
-                navController.navigate("login") {
-                    popUpTo("dashboard") { inclusive = true }
-                }
-            },
+            onClick = { showLogoutDialog = true }, // Open logout confirmation dialog
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -88,12 +83,38 @@ fun AdminDashboardScreen(navController: NavController) {
             )
         ) {
             Icon(
-                imageVector = Icons.AutoMirrored.Outlined.Logout,
+                imageVector = Icons.Outlined.Logout,
                 contentDescription = "Logout",
                 modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text("Logout")
+        }
+
+        // Logout Confirmation Dialog
+        if (showLogoutDialog) {
+            AlertDialog(
+                onDismissRequest = { showLogoutDialog = false },
+                title = { Text("Confirm Logout") },
+                text = { Text("Are you sure you want to log out?") },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            AuthService.logout()
+                            navController.navigate("login") {
+                                popUpTo("admin_dashboard") { inclusive = true }
+                            }
+                        }
+                    ) {
+                        Text("Yes")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showLogoutDialog = false }) {
+                        Text("Cancel")
+                    }
+                }
+            )
         }
     }
 }
