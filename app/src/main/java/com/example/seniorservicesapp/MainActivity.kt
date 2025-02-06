@@ -18,6 +18,7 @@ import com.example.seniorservicesapp.ui.AdminDashboardScreen
 import com.example.seniorservicesapp.ui.LoginScreen
 import com.example.seniorservicesapp.ui.SignupScreen
 import com.example.seniorservicesapp.ui.DashboardScreen
+import com.example.seniorservicesapp.ui.RequestsScreen
 import com.example.seniorservicesapp.ui.theme.SeniorServicesAppTheme
 import com.google.firebase.FirebaseApp
 
@@ -47,6 +48,8 @@ fun NavigationHost(navController: NavHostController, innerPadding: PaddingValues
         composable("signup") { SignupScreen(navController) }
         composable("dashboard") { DashboardScreen(navController) }
         composable("admin_dashboard") { AdminDashboardScreen(navController) }
+        composable("requests") { RequestsScreen(navController) }
     }
 }
+
 
