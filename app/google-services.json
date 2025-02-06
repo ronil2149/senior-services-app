@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "631253232457",
+    "project_id": "seniorservicesapp-d1b44",
+    "storage_bucket": "seniorservicesapp-d1b44.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631253232457:android:5020d9ab540a2eb2b9c898",
+        "android_client_info": {
+          "package_name": "com.example.seniorservicesapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXvGUs7KQiKdt2ElamxQZeN3YAKekmydU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
