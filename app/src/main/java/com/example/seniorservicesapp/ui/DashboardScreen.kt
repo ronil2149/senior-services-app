@@ -30,7 +30,8 @@ fun DashboardScreen(navController: NavController) {
     var serviceType by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
     var userRequests by remember { mutableStateOf<List<Map<String, Any>>>(emptyList()) }
-    var showServiceDropdown by remember { mutableStateOf(false) }  // For dropdown control
+    var showServiceDropdown by remember { mutableStateOf(false) }
+    var showLogoutDialog by remember { mutableStateOf(false) }
 
     // Fetch user's requests when screen opens
     LaunchedEffect(Unit) {
@@ -198,12 +199,7 @@ fun DashboardScreen(navController: NavController) {
 
         // Logout Button
         OutlinedButton(
-            onClick = {
-                AuthService.logout()
-                navController.navigate("login") {
-                    popUpTo("dashboard") { inclusive = true }
-                }
-            },
+            onClick = { showLogoutDialog = true }, // Open logout confirmation dialog
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -218,6 +214,32 @@ fun DashboardScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text("Logout")
+        }
+
+        // Logout Confirmation Dialog
+        if (showLogoutDialog) {
+            AlertDialog(
+                onDismissRequest = { showLogoutDialog = false },
+                title = { Text("Confirm Logout") },
+                text = { Text("Are you sure you want to log out?") },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            AuthService.logout()
+                            navController.navigate("login") {
+                                popUpTo("dashboard") { inclusive = true }
+                            }
+                        }
+                    ) {
+                        Text("Yes")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showLogoutDialog = false }) {
+                        Text("Cancel")
+                    }
+                }
+            )
         }
     }
 }
